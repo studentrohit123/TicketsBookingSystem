@@ -10,14 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_24_103951) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_27_084318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bookings", force: :cascade do |t|
+    t.string "name"
+    t.string "gender"
+    t.integer "seat_no"
+    t.string "bookable_type", null: false
+    t.bigint "bookable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bookable_type", "bookable_id"], name: "index_bookings_on_bookable"
+  end
+
+  create_table "buses", force: :cascade do |t|
+    t.string "name"
+    t.integer "number"
+    t.time "departure_time"
+    t.time "arrival_time"
+    t.integer "directions_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "directions", force: :cascade do |t|
     t.string "source"
     t.string "destination"
     t.string "distance"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "trains", force: :cascade do |t|
+    t.string "name"
+    t.integer "number"
+    t.time "departure_time"
+    t.time "arrival_time"
+    t.integer "direction_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
